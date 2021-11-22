@@ -10,7 +10,7 @@ import (
 func main() {
 	l := logger.NewLogger()
 	fr := file_reader.NewFileReader()
-	inoutSDC := fr.ReadSDC("./Inputs/SDC_Reservation_Document.json")
+	inoutSDC := fr.ReadSDC("./Inputs/SDC_Reservation_Document_sample.json")
 	caller := sap_api_caller.NewSAPAPICaller(
 		"https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/", l,
 	)
