@@ -52,7 +52,7 @@ func (c *SAPAPICaller) Reservation(Reservation string) {
 }
 
 func (c *SAPAPICaller) ReservationProduct(Reservation, Product string) {
-	res, err := c.callReservationSrvAPIRequirementReservationProduct("A_ReservationDocumentItem", Reservation, Product)
+	res, err := c.callReservationSrvAPIRequirementProduct("A_ReservationDocumentItem", Reservation, Product)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -61,7 +61,30 @@ func (c *SAPAPICaller) ReservationProduct(Reservation, Product string) {
 	c.log.Info(res)
 
 
-func (c *SAPAPICaller) callReservationSrvAPIRequirement(api, Reservation, Product string) ([]byte, error) {
+func (c *SAPAPICaller) callReservationSrvAPIRequirementReservation(api, Reservation string) ([]byte, error) {
+	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
+	req, _ := http.NewRequest("GET", url, nil)
+
+	params := req.URL.Query()
+	// params.Add("$select", "Reservation")
+	params.Add("$filter", fmt.Sprintf("Reservation eq '%s'", Reservation))
+	req.URL.RawQuery = params.Encode()
+
+	req.Header.Set("APIKey", c.apiKey)
+	req.Header.Set("Accept", "application/json")
+
+	client := new(http.Client)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	return byteArray, nil
+}
+
+func (c *SAPAPICaller) callReservationSrvAPIRequirementProduct(api, Reservation, Product string) ([]byte, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
