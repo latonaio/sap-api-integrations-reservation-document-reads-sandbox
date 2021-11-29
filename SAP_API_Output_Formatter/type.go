@@ -1,4 +1,4 @@
-package sap_api_caller
+package sap_api_output_formatter
 
 type ReservationDocument struct {
 	 ConnectionKey       string `json:"connection_key"`
@@ -6,12 +6,12 @@ type ReservationDocument struct {
 	 RedisKey            string `json:"redis_key"`
 	 Filepath            string `json:"filepath"`
 	 APISchema           string `json:"api_schema"`
-	 Reservation         int    `json:"reservation_document"`
-	 Deleted             string `json:"deleted"`
+	 Reservation         string `json:"reservation_document"`
+	 Deleted             bool   `json:"deleted"`
 }
 
 type ReservationDocumentHeader struct {
-	 Reservation                  int    `json:"reservation_document"`     
+	 Reservation                  string `json:"reservation_document"`     
      OrderID                      string `json:"OrderID"`
 	 GoodsMovementType            string `json:"GoodsMovementType"`
 	 CostCenter                   string `json:"CostCenter"`
@@ -31,15 +31,15 @@ type ReservationDocumentHeader struct {
 }	
 
 type ReservationDocumentItem struct {
-	 Reservation                    int    `json:"reservation_document"`
-     ReservationItem                int    `json:"ReservationItem"`
+	 Reservation                    string `json:"reservation_document"`
+     ReservationItem                string `json:"ReservationItem"`
      RecordType                     string `json:"RecordType"`
      Product                        string `json:"Product"`
      RequirementType                string `json:"RequirementType"`
      MatlCompRequirementDate        string `json:"MatlCompRequirementDate"`
      Plant                          string `json:"Plant"`
-     ManufacturingOrderOperation    int    `json:"ManufacturingOrderOperation"`
-     GoodsMovementIsAllowed         string `json:"GoodsMovementIsAllowed"`
+     ManufacturingOrderOperation    string `json:"ManufacturingOrderOperation"`
+     GoodsMovementIsAllowed         bool   `json:"GoodsMovementIsAllowed"`
      StorageLocation                string `json:"StorageLocation"`
      Batch                          string `json:"Batch"`
      DebitCreditCode                string `json:"DebitCreditCode"`
@@ -47,19 +47,19 @@ type ReservationDocumentItem struct {
      GLAccount                      string `json:"GLAccount"`
      GoodsMovementType              string `json:"GoodsMovementType"`
      EntryUnit                      string `json:"EntryUnit"`
-     QuantityIsFixed                string `json:"QuantityIsFixed"`
+     QuantityIsFixed                bool   `json:"QuantityIsFixed"`
      CompanyCodeCurrency            string `json:"CompanyCodeCurrency"`
      IssuingOrReceivingPlant        string `json:"IssuingOrReceivingPlant"`
      IssuingOrReceivingStorageLoc   string `json:"IssuingOrReceivingStorageLoc"`
      PurchasingDocument             string `json:"PurchasingDocument"`
-     PurchasingDocumentItem         int    `json:"PurchasingDocumentItem"`
+     PurchasingDocumentItem         string `json:"PurchasingDocumentItem"`
      Supplier                       string `json:"Supplier"`
-     ResvnItmRequiredQtyInBaseUnit  float64 `json:"ResvnItmRequiredQtyInBaseUnit"`
-     ReservationItemIsFinallyIssued string `json:"ReservationItemIsFinallyIssued"`
-     ReservationItmIsMarkedForDeltn string `json:"ReservationItmIsMarkedForDeltn"`
-     ResvnItmRequiredQtyInEntryUnit float64 `json:"ResvnItmRequiredQtyInEntryUnit"`
-     ResvnItmWithdrawnQtyInBaseUnit float64 `json:"ResvnItmWithdrawnQtyInBaseUnit"`
-     ResvnItmWithdrawnAmtInCCCrcy   float64 `json:"ResvnItmWithdrawnAmtInCCCrcy"`
+     ResvnItmRequiredQtyInBaseUnit  string `json:"ResvnItmRequiredQtyInBaseUnit"`
+     ReservationItemIsFinallyIssued bool   `json:"ReservationItemIsFinallyIssued"`
+     ReservationItmIsMarkedForDeltn bool   `json:"ReservationItmIsMarkedForDeltn"`
+     ResvnItmRequiredQtyInEntryUnit string `json:"ResvnItmRequiredQtyInEntryUnit"`
+     ResvnItmWithdrawnQtyInBaseUnit string `json:"ResvnItmWithdrawnQtyInBaseUnit"`
+     ResvnItmWithdrawnAmtInCCCrcy   string `json:"ResvnItmWithdrawnAmtInCCCrcy"`
      GoodsRecipientName             string `json:"GoodsRecipientName"`
      UnloadingPointName             string `json:"UnloadingPointName"`
      ReservationItemText            string `json:"ReservationItemText"`

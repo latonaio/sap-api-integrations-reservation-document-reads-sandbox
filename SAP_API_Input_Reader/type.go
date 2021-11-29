@@ -1,4 +1,4 @@
-package file_reader
+package sap_api_input_reader
 
 type EC_MC struct {
 	ConnectionKey string `json:"connection_key"`
@@ -6,19 +6,19 @@ type EC_MC struct {
 	RedisKey      string `json:"redis_key"`
 	Filepath      string `json:"filepath"`
 	Reservation   struct {
-		Reservation                    int         `json:"document_no"`
+		Reservation                    string      `json:"document_no"`
 		DeliverTo                      string      `json:"deliver_to"`
-		ResvnItmRequiredQtyInEntryUnit float64     `json:"quantity"`
-		ResvnItmWithdrawnQtyInBaseUnit float64     `json:"picked_quantity"`
-		Price                          float64     `json:"price"`
+		ResvnItmRequiredQtyInEntryUnit string      `json:"quantity"`
+		ResvnItmWithdrawnQtyInBaseUnit string      `json:"picked_quantity"`
+		Price                          string      `json:"price"`
 	    Batch                          string      `json:"batch"`
 	} `json:"document"`
 	ProductionOrder struct {
 		DocumentNo           string      `json:"document_no"`
 		Status               string      `json:"status"`
 		DeliverTo            string      `json:"deliver_to"`
-		Quantity             float64     `json:"quantity"`
-		CompletedQuantity    float64     `json:"completed_quantity"`
+		Quantity             string      `json:"quantity"`
+		CompletedQuantity    string      `json:"completed_quantity"`
 	    PlannedStartDate     string      `json:"planned_start_date"`
 	    PlannedValidatedDate string      `json:"planned_validated_date"`
 	    ActualStartDate      string      `json:"actual_start_date"`
@@ -26,11 +26,11 @@ type EC_MC struct {
 	    Batch                string      `json:"batch"`
 		Work              struct {
 			WorkNo                   string      `json:"work_no"`
-			Quantity                 float64     `json:"quantity"`
-			CompletedQuantity        float64     `json:"completed_quantity"`
-			ErroredQuantity          float64     `json:"errored_quantity"`
+			Quantity                 string      `json:"quantity"`
+			CompletedQuantity        string      `json:"completed_quantity"`
+			ErroredQuantity          string      `json:"errored_quantity"`
 			Component                string      `json:"component"`
-			PlannedComponentQuantity float64     `json:"planned_component_quantity"`
+			PlannedComponentQuantity string      `json:"planned_component_quantity"`
 			PlannedStartDate         string      `json:"planned_start_date"`
 			PlannedStartTime         string      `json:"planned_start_time"`
 			PlannedValidatedDate     string      `json:"planned_validated_date"`
@@ -44,12 +44,12 @@ type EC_MC struct {
 	APISchema               string `json:"api_schema"`
 	MaterialCode            string `json:"material_code"`
 	Plant_Supplier          string `json:"plant/supplier"`
-	Stock                   float64 `json:"stock"`
+	Stock                   string `json:"stock"`
 	GoodsMovementType       string `json:"document_type"`
-	Reservation             int    `json:"document_no"`
+	Reservation             string `json:"document_no"`
 	ReservationDate         string `json:"planned_date"`
 	ValidatedDate           string `json:"validated_date"`
-	Deleted                 string `json:"deleted"`
+	Deleted                 bool   `json:"deleted"`
 }
 
 type SDC struct {
@@ -58,7 +58,7 @@ type SDC struct {
 	RedisKey            string `json:"redis_key"`
 	Filepath            string `json:"filepath"`
 	Reservation    struct {
-		Reservation                  int    `json:"Reservation"`
+		Reservation                  string `json:"Reservation"`
 		OrderID                      string `json:"OrderID"`
 		GoodsMovementType            string `json:"GoodsMovementType"`
 		CostCenter                   string `json:"CostCenter"`
@@ -76,14 +76,14 @@ type SDC struct {
 		IssuingOrReceivingPlant      string `json:"IssuingOrReceivingPlant"`
 		IssuingOrReceivingStorageLoc string `json:"IssuingOrReceivingStorageLoc"`
 		ReservationItem              struct {
-			ReservationItem                int    `json:"ReservationItem"`
+			ReservationItem                string `json:"ReservationItem"`
 			RecordType                     string `json:"RecordType"`
 			Product                        string `json:"Product"`
 			RequirementType                string `json:"RequirementType"`
 			MatlCompRequirementDate        string `json:"MatlCompRequirementDate"`
 			Plant                          string `json:"Plant"`
-			ManufacturingOrderOperation    int    `json:"ManufacturingOrderOperation"`
-			GoodsMovementIsAllowed         string `json:"GoodsMovementIsAllowed"`
+			ManufacturingOrderOperation    string `json:"ManufacturingOrderOperation"`
+			GoodsMovementIsAllowed         bool   `json:"GoodsMovementIsAllowed"`
 			StorageLocation                string `json:"StorageLocation"`
 			Batch                          string `json:"Batch"`
 			DebitCreditCode                string `json:"DebitCreditCode"`
@@ -91,25 +91,25 @@ type SDC struct {
 			GLAccount                      string `json:"GLAccount"`
 			GoodsMovementType              string `json:"GoodsMovementType"`
 			EntryUnit                      string `json:"EntryUnit"`
-			QuantityIsFixed                string `json:"QuantityIsFixed"`
+			QuantityIsFixed                bool   `json:"QuantityIsFixed"`
 			CompanyCodeCurrency            string `json:"CompanyCodeCurrency"`
 			IssuingOrReceivingPlant        string `json:"IssuingOrReceivingPlant"`
 			IssuingOrReceivingStorageLoc   string `json:"IssuingOrReceivingStorageLoc"`
 			PurchasingDocument             string `json:"PurchasingDocument"`
-			PurchasingDocumentItem         int    `json:"PurchasingDocumentItem"`
+			PurchasingDocumentItem         string `json:"PurchasingDocumentItem"`
 			Supplier                       string `json:"Supplier"`
 			ResvnItmRequiredQtyInBaseUnit  string `json:"ResvnItmRequiredQtyInBaseUnit"`
 			ReservationItemIsFinallyIssued string `json:"ReservationItemIsFinallyIssued"`
 			ReservationItmIsMarkedForDeltn string `json:"ReservationItmIsMarkedForDeltn"`
-			ResvnItmRequiredQtyInEntryUnit float64 `json:"ResvnItmRequiredQtyInEntryUnit"`
-			ResvnItmWithdrawnQtyInBaseUnit float64 `json:"ResvnItmWithdrawnQtyInBaseUnit"`
-			ResvnItmWithdrawnAmtInCCCrcy   float64 `json:"ResvnItmWithdrawnAmtInCCCrcy"`
+			ResvnItmRequiredQtyInEntryUnit string `json:"ResvnItmRequiredQtyInEntryUnit"`
+			ResvnItmWithdrawnQtyInBaseUnit string `json:"ResvnItmWithdrawnQtyInBaseUnit"`
+			ResvnItmWithdrawnAmtInCCCrcy   string `json:"ResvnItmWithdrawnAmtInCCCrcy"`
 			GoodsRecipientName             string `json:"GoodsRecipientName"`
 			UnloadingPointName             string `json:"UnloadingPointName"`
 			ReservationItemText            string `json:"ReservationItemText"`
 		} `json:"ReservationItem"`
 	} `json:"ReservationDocument"`
 	APISchema           string `json:"api_schema"`
-	Reservation         int    `json:"reservation_document"`
-	Deleted             string `json:"deleted"`
+	Reservation         string `json:"reservation_document"`
+	Deleted             bool   `json:"deleted"`
 }
