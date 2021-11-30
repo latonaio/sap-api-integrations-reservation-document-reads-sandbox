@@ -29,19 +29,19 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(Reservation, Product string) 
 
 	wg.Add(2)
 	go func() {
-		c.Reservation(Reservation)
+		c.ReservationHeader(Reservation)
 		wg.Done()
 	}()
 	
 	go func() {
-		c.ReservationProduct(Reservation, Product)
+		c.ReservationItem(Reservation, Product)
 		wg.Done()
 	}()
 	wg.Wait()
 }
 
-func (c *SAPAPICaller) Reservation(Reservation string) {
-	res, err := c.callReservationSrvAPIRequirementReservation("A_ReservationDocumentHeader", Reservation)
+func (c *SAPAPICaller) ReservationHeader(Reservation string) {
+	res, err := c.callReservationSrvAPIRequirementHeader("A_ReservationDocumentHeader", Reservation)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -51,8 +51,8 @@ func (c *SAPAPICaller) Reservation(Reservation string) {
 
 }
 
-func (c *SAPAPICaller) ReservationProduct(Reservation, Product string) {
-	res, err := c.callReservationSrvAPIRequirementProduct("A_ReservationDocumentItem", Reservation, Product)
+func (c *SAPAPICaller) ReservationItem(Reservation, Product string) {
+	res, err := c.callReservationSrvAPIRequirementItem("A_ReservationDocumentItem", Reservation, Product)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -61,7 +61,7 @@ func (c *SAPAPICaller) ReservationProduct(Reservation, Product string) {
 	c.log.Info(res)
 
 
-func (c *SAPAPICaller) callReservationSrvAPIRequirementReservation(api, Reservation string) ([]byte, error) {
+func (c *SAPAPICaller) callReservationSrvAPIRequirementHeader(api, Reservation string) ([]byte, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -84,7 +84,7 @@ func (c *SAPAPICaller) callReservationSrvAPIRequirementReservation(api, Reservat
 	return byteArray, nil
 }
 
-func (c *SAPAPICaller) callReservationSrvAPIRequirementProduct(api, Reservation, Product string) ([]byte, error) {
+func (c *SAPAPICaller) callReservationSrvAPIRequirementItem(api, Reservation, Product string) ([]byte, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
