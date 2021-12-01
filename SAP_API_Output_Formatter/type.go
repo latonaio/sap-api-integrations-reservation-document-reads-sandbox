@@ -10,7 +10,7 @@ type ReservationDocument struct {
 	 Deleted             bool   `json:"deleted"`
 }
 
-type ReservationDocumentHeader struct {
+type Header struct {
 	 Reservation                  string `json:"reservation_document"`     
      OrderID                      string `json:"OrderID"`
 	 GoodsMovementType            string `json:"GoodsMovementType"`
@@ -30,7 +30,7 @@ type ReservationDocumentHeader struct {
 	 IssuingOrReceivingStorageLoc string `json:"IssuingOrReceivingStorageLoc"`
 }	
 
-type ReservationDocumentItem struct {
+type Item struct {
 	 Reservation                    string `json:"reservation_document"`
      ReservationItem                string `json:"ReservationItem"`
      RecordType                     string `json:"RecordType"`
