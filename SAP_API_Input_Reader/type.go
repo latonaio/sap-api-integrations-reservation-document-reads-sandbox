@@ -46,7 +46,7 @@ type EC_MC struct {
 	Plant_Supplier          string `json:"plant/supplier"`
 	Stock                   string `json:"stock"`
 	GoodsMovementType       string `json:"document_type"`
-	Reservation             string `json:"document_no"`
+	ReservationDocument     string `json:"document_no"`
 	ReservationDate         string `json:"planned_date"`
 	ValidatedDate           string `json:"validated_date"`
 	Deleted                 bool   `json:"deleted"`
@@ -99,8 +99,8 @@ type SDC struct {
 			PurchasingDocumentItem         string `json:"PurchasingDocumentItem"`
 			Supplier                       string `json:"Supplier"`
 			ResvnItmRequiredQtyInBaseUnit  string `json:"ResvnItmRequiredQtyInBaseUnit"`
-			ReservationItemIsFinallyIssued string `json:"ReservationItemIsFinallyIssued"`
-			ReservationItmIsMarkedForDeltn string `json:"ReservationItmIsMarkedForDeltn"`
+			ReservationItemIsFinallyIssued bool   `json:"ReservationItemIsFinallyIssued"`
+			ReservationItmIsMarkedForDeltn bool   `json:"ReservationItmIsMarkedForDeltn"`
 			ResvnItmRequiredQtyInEntryUnit string `json:"ResvnItmRequiredQtyInEntryUnit"`
 			ResvnItmWithdrawnQtyInBaseUnit string `json:"ResvnItmWithdrawnQtyInBaseUnit"`
 			ResvnItmWithdrawnAmtInCCCrcy   string `json:"ResvnItmWithdrawnAmtInCCCrcy"`
@@ -110,6 +110,6 @@ type SDC struct {
 		} `json:"ReservationItem"`
 	} `json:"ReservationDocument"`
 	APISchema           string `json:"api_schema"`
-	Reservation         string `json:"reservation_document"`
+	ReservationDocument string `json:"reservation_document"`
 	Deleted             bool   `json:"deleted"`
 }

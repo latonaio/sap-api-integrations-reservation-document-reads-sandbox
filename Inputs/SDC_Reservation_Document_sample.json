@@ -4,8 +4,8 @@
 	"redis_key": "abcdefg",
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
 	"ReservationDocument": {
-		"Reservation": 23,
-		"OrderID": "1000001",
+		"Reservation": "1",
+		"OrderID": "1000000",
 		"GoodsMovementType": "261",
 		"CostCenter": "",
 		"GoodsRecipientName": "",
@@ -22,9 +22,9 @@
 		"IssuingOrReceivingPlant": "",
 		"IssuingOrReceivingStorageLoc": "",
 		"ReservationItem": {
-			"ReservationItem": "1",
+			"ReservationItem": "8",
 			"RecordType": "",
-			"Product": "100049",
+			"Product": "MZ-RM-R10-01",
 			"RequirementType": "AR",
 			"MatlCompRequirementDate": "20211130",
 			"Plant": "1000",
@@ -55,7 +55,7 @@
 			"ReservationItemText": ""
 		}
 	},
-	"api_schema": "/A_ReservationDocumentHeader('{Reservation}')/to_ReservationDocumentItem",
-	"reservation_document": 23,
+	"api_schema": "/A_ReservationDocumentHeader",
+	"reservation_document": "1",
 	"deleted": false
 }

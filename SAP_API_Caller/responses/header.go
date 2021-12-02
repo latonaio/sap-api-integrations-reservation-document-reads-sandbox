@@ -1,6 +1,6 @@
 package responses
 
-type ReservationHeader struct {
+type Header struct {
 	D struct {
 		Results []struct {
 			Metadata struct {
@@ -8,7 +8,7 @@ type ReservationHeader struct {
 				URI  string `json:"uri"`
 				Type string `json:"type"`
 			} `json:"__metadata"`
-			Reservation                  string `json:"reservation_document"`
+			Reservation                  string `json:"Reservation"`
 			OrderID                      string `json:"OrderID"`
 			GoodsMovementType            string `json:"GoodsMovementType"`
 			CostCenter                   string `json:"CostCenter"`

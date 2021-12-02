@@ -11,7 +11,7 @@ type ReservationDocument struct {
 }
 
 type Header struct {
-	 Reservation                  string `json:"reservation_document"`     
+	 Reservation                  string `json:"Reservation"`     
      OrderID                      string `json:"OrderID"`
 	 GoodsMovementType            string `json:"GoodsMovementType"`
 	 CostCenter                   string `json:"CostCenter"`
@@ -31,7 +31,7 @@ type Header struct {
 }	
 
 type Item struct {
-	 Reservation                    string `json:"reservation_document"`
+	 Reservation                    string `json:"Reservation"`
      ReservationItem                string `json:"ReservationItem"`
      RecordType                     string `json:"RecordType"`
      Product                        string `json:"Product"`

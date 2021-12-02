@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	sap_api_output_formatter "sap-api-integrations-reservation-document-reads/SAP_API_Output_Formatter"
 	"strings"
 	"sync"
 
 	"github.com/latonaio/golang-logging-library/logger"
+	"golang.org/x/xerrors"
 )
 
 type SAPAPICaller struct {
@@ -24,85 +26,95 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetReservationDocument(Reservation, Product string) {
+func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, product string) {
 	wg := &sync.WaitGroup{}
 
 	wg.Add(2)
-	go func() {
-		c.ReservationHeader(Reservation)
+	func() {
+		c.Header(reservation)
 		wg.Done()
 	}()
-	
-	go func() {
-		c.ReservationItem(Reservation, Product)
+	func() {
+		c.Item(reservation, recordType, product)
 		wg.Done()
 	}()
 	wg.Wait()
 }
 
-func (c *SAPAPICaller) ReservationHeader(Reservation string) {
-	res, err := c.callReservationSrvAPIRequirementHeader("A_ReservationDocumentHeader", Reservation)
+func (c *SAPAPICaller) Header(reservation string) {
+	data, err := c.callReservationDocumentSrvAPIRequirementHeader("A_ReservationDocumentHeader", reservation)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-
-	c.log.Info(res)
-
+	c.log.Info(data)
 }
 
-func (c *SAPAPICaller) ReservationItem(Reservation, Product string) {
-	res, err := c.callReservationSrvAPIRequirementItem("A_ReservationDocumentItem", Reservation, Product)
+func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementHeader(api, reservation string) (*sap_api_output_formatter.Header, error) {
+	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
+	req, _ := http.NewRequest("GET", url, nil)
+
+	c.setHeaderAPIKeyAccept(req)
+	c.getQueryWithHeader(req, reservation)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToHeader(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
+func (c *SAPAPICaller) Item(reservation, recordType, product string) {
+	data, err := c.callReservationDocumentSrvAPIRequirementItem("A_ReservationDocumentItem", reservation, recordType, product)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-
-	c.log.Info(res)
-
-
-func (c *SAPAPICaller) callReservationSrvAPIRequirementHeader(api, Reservation string) ([]byte, error) {
-	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
-	req, _ := http.NewRequest("GET", url, nil)
-
-	params := req.URL.Query()
-	// params.Add("$select", "Reservation")
-	params.Add("$filter", fmt.Sprintf("Reservation eq '%s'", Reservation))
-	req.URL.RawQuery = params.Encode()
-
-	req.Header.Set("APIKey", c.apiKey)
-	req.Header.Set("Accept", "application/json")
-
-	client := new(http.Client)
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return byteArray, nil
+	c.log.Info(data)
 }
 
-func (c *SAPAPICaller) callReservationSrvAPIRequirementItem(api, Reservation, Product string) ([]byte, error) {
+func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementItem(api, reservation, recordType, product string) (*sap_api_output_formatter.Item, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
-	params := req.URL.Query()
-	// params.Add("$select", "Reservation, Product")
-	params.Add("$filter", fmt.Sprintf("Reservation eq '%s' and Product eq '%s'", Reservation, Product))
-	req.URL.RawQuery = params.Encode()
+	c.setHeaderAPIKeyAccept(req)
+	c.getQueryWithItem(req, reservation, recordType, product)
 
-	req.Header.Set("APIKey", c.apiKey)
-	req.Header.Set("Accept", "application/json")
-
-	client := new(http.Client)
-	resp, err := client.Do(req)
+	resp, err := new(http.Client).Do(req)
 	if err != nil {
-		return nil, err
+		return nil, xerrors.Errorf("API request error: %w", err)
 	}
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return byteArray, nil
+	data, err := sap_api_output_formatter.ConvertToItem(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
+
+func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
+	req.Header.Set("APIKey", c.apiKey)
+	req.Header.Set("Accept", "application/json")
+}
+
+func (c *SAPAPICaller) getQueryWithHeader(req *http.Request, reservation string) {
+	params := req.URL.Query()
+	params.Add("$filter", fmt.Sprintf("Reservation eq '%s'", reservation))
+	req.URL.RawQuery = params.Encode()
+}
+
+func (c *SAPAPICaller) getQueryWithItem(req *http.Request, reservation, recordType, product string) {
+	params := req.URL.Query()
+	params.Add("$filter", fmt.Sprintf("Reservation eq '%s' and RecordType eq '%s' and Product eq '%s'", reservation, recordType, product))
+	req.URL.RawQuery = params.Encode()
 }
