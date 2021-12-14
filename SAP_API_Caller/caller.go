@@ -26,18 +26,27 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, product string) {
+func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, product string, accepter []string) {
 	wg := &sync.WaitGroup{}
+	wg.Add(len(accepter))
+	for _, fn := range accepter {
+		switch fn {
+		case "Header":
+			func() {
+				c.Header(reservation)
+				wg.Done()
+			}()
+		case "Plant":
+			func() {
+				c.Item(reservation, recordType, product)
+				wg.Done()
+			}()
 
-	wg.Add(2)
-	func() {
-		c.Header(reservation)
-		wg.Done()
-	}()
-	func() {
-		c.Item(reservation, recordType, product)
-		wg.Done()
-	}()
+		default:
+			wg.Done()
+		}
+	}
+
 	wg.Wait()
 }
 
@@ -100,7 +109,6 @@ func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementItem(api, reserva
 	}
 	return data, nil
 }
-
 
 func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("APIKey", c.apiKey)
