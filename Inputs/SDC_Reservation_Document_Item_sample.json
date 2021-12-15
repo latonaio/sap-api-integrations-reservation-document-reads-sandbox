@@ -56,7 +56,7 @@
 		}
 	},
 	"api_schema": "/A_ReservationDocumentHeader",
-	"accepter": ["header","Plant"],
+	"accepter": ["Header", "Product"],
 	"reservation_document": "1",
 	"deleted": false
 }
