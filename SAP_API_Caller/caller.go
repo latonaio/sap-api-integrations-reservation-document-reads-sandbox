@@ -36,7 +36,7 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 				c.Header(reservation)
 				wg.Done()
 			}()
-		case "Product":
+		case "Item":
 			func() {
 				c.Item(reservation, recordType, product)
 				wg.Done()

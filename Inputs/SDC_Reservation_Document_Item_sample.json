@@ -56,7 +56,7 @@
 		}
 	},
 	"api_schema": "/A_ReservationDocumentHeader",
-	"accepter": ["Header", "Product"],
+	"accepter": ["Header", "Item"],
 	"reservation_document": "1",
 	"deleted": false
 }
