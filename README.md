@@ -98,7 +98,7 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 ```
 ## Output  
 本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
-以下の sample.json の例は、SAP 入出庫予定ヘッダ が取得された結果の JSON の例です。  
+以下の sample.json の例は、SAP 入出庫予定ヘッダデータ が取得された結果の JSON の例です。  
 以下の項目のうち、"AssetNumber" ～ "WBSElement" は、/SAP_API_Output_Formatter/type.go 内 の Type Product {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
