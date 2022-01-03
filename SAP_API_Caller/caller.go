@@ -51,15 +51,22 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 }
 
 func (c *SAPAPICaller) Header(reservation string) {
-	data, err := c.callReservationDocumentSrvAPIRequirementHeader("A_ReservationDocumentHeader", reservation)
+	headerData, err := c.callReservationDocumentSrvAPIRequirementHeader("A_ReservationDocumentHeader", reservation)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-	c.log.Info(data)
+	c.log.Info(headerData)
+	
+	itemData, err := c.callToItem(headerData[0].ToItem)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(itemData)
 }
 
-func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementHeader(api, reservation string) (*sap_api_output_formatter.Header, error) {
+func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementHeader(api, reservation string) ([]sap_api_output_formatter.Header, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -80,6 +87,24 @@ func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementHeader(api, reser
 	return data, nil
 }
 
+func (c *SAPAPICaller) callToItem(url string) ([]sap_api_output_formatter.ToItem, error) {
+	req, _ := http.NewRequest("GET", url, nil)
+	c.setHeaderAPIKeyAccept(req)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToToItem(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
 func (c *SAPAPICaller) Item(reservation, recordType, product string) {
 	data, err := c.callReservationDocumentSrvAPIRequirementItem("A_ReservationDocumentItem", reservation, recordType, product)
 	if err != nil {
@@ -89,7 +114,7 @@ func (c *SAPAPICaller) Item(reservation, recordType, product string) {
 	c.log.Info(data)
 }
 
-func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementItem(api, reservation, recordType, product string) (*sap_api_output_formatter.Item, error) {
+func (c *SAPAPICaller) callReservationDocumentSrvAPIRequirementItem(api, reservation, recordType, product string) ([]sap_api_output_formatter.Item, error) {
 	url := strings.Join([]string{c.baseURL, "API_RESERVATION_DOCUMENT_SRV", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 

@@ -25,6 +25,11 @@ type Header struct {
 			NetworkNumberForAcctAssgmt   string `json:"NetworkNumberForAcctAssgmt"`
 			IssuingOrReceivingPlant      string `json:"IssuingOrReceivingPlant"`
 			IssuingOrReceivingStorageLoc string `json:"IssuingOrReceivingStorageLoc"`
+			ToItem    struct {
+				Deferred struct {
+					URI string `json:"uri"`
+				} `json:"__deferred"`
+			} `json:"to_ReservationDocumentItem"`
 		} `json:"results"`
 	} `json:"d"`
 }

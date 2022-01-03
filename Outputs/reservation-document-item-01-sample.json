@@ -1,0 +1,42 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-reservation-document-reads/SAP_API_Caller/caller.go#L114",
+	"function": "sap-api-integrations-reservation-document-reads/SAP_API_Caller.(*SAPAPICaller).Item",
+	"level": "INFO",
+	"message": [
+		{
+			"Reservation": "1",
+			"ReservationItem": "8",
+			"RecordType": "",
+			"Product": "MZ-RM-R10-01",
+			"RequirementType": "AR",
+			"MatlCompRequirementDate": "/Date(1496707200000)/",
+			"Plant": "1710",
+			"ManufacturingOrderOperation": "0020",
+			"GoodsMovementIsAllowed": true,
+			"StorageLocation": "171C",
+			"Batch": "",
+			"DebitCreditCode": "H",
+			"BaseUnit": "PC",
+			"GLAccount": "51100000",
+			"GoodsMovementType": "261",
+			"EntryUnit": "PC",
+			"QuantityIsFixed": false,
+			"CompanyCodeCurrency": "USD",
+			"IssuingOrReceivingPlant": "",
+			"IssuingOrReceivingStorageLoc": "",
+			"PurchasingDocument": "",
+			"PurchasingDocumentItem": "0",
+			"Supplier": "",
+			"ResvnItmRequiredQtyInBaseUnit": "1500",
+			"ReservationItemIsFinallyIssued": false,
+			"ReservationItmIsMarkedForDeltn": true,
+			"ResvnItmRequiredQtyInEntryUnit": "1500",
+			"ResvnItmWithdrawnQtyInBaseUnit": "0",
+			"ResvnItmWithdrawnAmtInCCCrcy": "0.00",
+			"GoodsRecipientName": "",
+			"UnloadingPointName": "",
+			"ReservationItemText": ""
+		}
+	],
+	"time": "2022-01-03T20:54:05.288709+09:00"
+}

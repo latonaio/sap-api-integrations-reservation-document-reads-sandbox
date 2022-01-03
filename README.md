@@ -26,8 +26,9 @@ sap-api-integrations-reservation-document-reads が対応する APIサービス 
 ## 本レポジトリ に 含まれる API名
 sap-api-integrations-reservation-document-reads には、次の API をコールするためのリソースが含まれています。  
 
-* A_ReservationDocumentHeader（入出庫予定ヘッダ）
-* A_ReservationDocumentItem（入出庫予定明細）
+* A_ReservationDocumentHeader（入出庫予定 - ヘッダ）
+* A_ReservationDocumentItem（入出庫予定 - 明細）
+* ToItem（入出庫予定 - 明細 ※To）
 
 ## API への 値入力条件 の 初期値
 sap-api-integrations-reservation-document-reads において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
@@ -98,32 +99,38 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 ```
 ## Output  
 本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
-以下の sample.json の例は、SAP 入出庫予定ヘッダデータ が取得された結果の JSON の例です。  
-以下の項目のうち、"AssetNumber" ～ "WBSElement" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の sample.json の例は、SAP 入出庫予定 の ヘッダデータ が取得された結果の JSON の例です。  
+以下の項目のうち、"Reservation" ～ "to_ReservationDocumentItem" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
 {
-	"AssetNumber": "",
-	"AssetSubNumber": "",
-	"ControllingArea": "A000",
-	"CostCenter": "",
-	"Customer": "",
-	"GoodsMovementType": "261",
-	"GoodsRecipientName": "",
-	"IssuingOrReceivingPlant": "",
-	"IssuingOrReceivingStorageLoc": "",
-	"NetworkNumberForAcctAssgmt": "",
-	"OrderID": "1000000",
-	"Reservation": "1",
-	"ReservationDate": "",
-	"SalesOrder": "",
-	"SalesOrderItem": "0",
-	"SalesOrderScheduleLine": "0",
-	"WBSElement": "",
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-reservation-document-reads/SAP_API_Caller/caller.go#L50",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-reservation-document-reads/SAP_API_Caller/caller.go#L59",
 	"function": "sap-api-integrations-reservation-document-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
-	"time": "2021-12-02T19:17:34.169452+09:00"
+	"message": [
+		{
+			"Reservation": "1",
+			"OrderID": "1000000",
+			"GoodsMovementType": "261",
+			"CostCenter": "",
+			"GoodsRecipientName": "",
+			"ReservationDate": "",
+			"Customer": "",
+			"WBSElement": "",
+			"ControllingArea": "A000",
+			"SalesOrder": "",
+			"SalesOrderItem": "0",
+			"SalesOrderScheduleLine": "0",
+			"AssetNumber": "",
+			"AssetSubNumber": "",
+			"NetworkNumberForAcctAssgmt": "",
+			"IssuingOrReceivingPlant": "",
+			"IssuingOrReceivingStorageLoc": "",
+			"to_ReservationDocumentItem": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_RESERVATION_DOCUMENT_SRV/A_ReservationDocumentHeader('1')/to_ReservationDocumentItem"
+		}
+	],
+	"time": "2022-01-03T20:51:21.621065+09:00"
 }
+
 
 ```
