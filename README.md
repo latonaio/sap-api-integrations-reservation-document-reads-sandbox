@@ -98,9 +98,9 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 }
 ```
 ## Output  
-本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
+本マイクロサービスでは、[golang-logging-library-for-sap](https://github.com/latonaio/golang-logging-library-for-sap) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 入出庫予定 の ヘッダデータ が取得された結果の JSON の例です。  
-以下の項目のうち、"Reservation" ～ "to_ReservationDocumentItem" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の項目のうち、"Reservation" ～ "to_ReservationDocumentItem" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library-for-sap による 定型フォーマットの出力結果です。  
 
 ```
 {
@@ -129,8 +129,6 @@ func (c *SAPAPICaller) AsyncGetReservationDocument(reservation, recordType, prod
 			"to_ReservationDocumentItem": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_RESERVATION_DOCUMENT_SRV/A_ReservationDocumentHeader('1')/to_ReservationDocumentItem"
 		}
 	],
-	"time": "2022-01-03T20:51:21.621065+09:00"
+	"time": "2022-01-27T21:30:11+09:00"
 }
-
-
 ```
